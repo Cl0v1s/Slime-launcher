@@ -31,6 +31,7 @@ class HomeWatcher(private val context: Context) {
     inner class InnerReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
+            return
             if (intent == null) return
             if (intent.action != Intent.ACTION_CLOSE_SYSTEM_DIALOGS) return
             val reason = intent.getStringExtra("reason") ?: return

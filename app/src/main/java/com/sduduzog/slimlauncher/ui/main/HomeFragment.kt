@@ -3,6 +3,7 @@ package com.sduduzog.slimlauncher.ui.main
 import android.content.*
 import android.content.pm.LauncherApps
 import android.os.Bundle
+import android.os.Process
 import android.os.UserManager
 import android.provider.AlarmClock
 import android.provider.CalendarContract
@@ -10,10 +11,13 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.sduduzog.slimlauncher.BuildConfig
 import com.sduduzog.slimlauncher.R
 import com.sduduzog.slimlauncher.adapters.HomeAdapter
+import com.sduduzog.slimlauncher.data.model.App
 import com.sduduzog.slimlauncher.databinding.HomeFragmentBinding
 import com.sduduzog.slimlauncher.models.HomeApp
 import com.sduduzog.slimlauncher.models.MainViewModel
@@ -37,6 +41,8 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.setInstalledApps(getInstalledApps());
+
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
         val adapter1 = HomeAdapter(this)
         val adapter2 = HomeAdapter(this)
@@ -45,18 +51,44 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
 
         viewModel.apps.observe(viewLifecycleOwner) { list ->
             list?.let { apps ->
-                adapter1.setItems(apps.filter {
-                    it.sortingIndex < 4
-                })
-                adapter2.setItems(apps.filter {
-                    it.sortingIndex >= 4
-                })
+                adapter1.setItems(apps)
             }
         }
-//
+
+        adapter2.setItems(viewModel.installedApps);
+
         setEventListeners()
         binding!!.homeFragmentOptions.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_optionsFragment))
         return binding?.root
+    }
+
+    private fun getInstalledApps(): List<App> {
+        val list = mutableListOf<App>()
+
+        val manager = requireContext().getSystemService(Context.USER_SERVICE) as UserManager
+        val launcher = requireContext().getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        val myUserHandle = Process.myUserHandle()
+
+        for (profile in manager.userProfiles) {
+            val prefix = if (profile.equals(myUserHandle)) "" else "\uD83C\uDD46 " //Unicode for boxed w
+            val profileSerial = manager.getSerialNumberForUser(profile)
+
+            for (activityInfo in launcher.getActivityList(null, profile)) {
+                val app = App(
+                        appName = prefix + activityInfo.label.toString(),
+                        packageName = activityInfo.applicationInfo.packageName,
+                        activityName = activityInfo.name,
+                        userSerial = profileSerial
+                )
+                list.add(app)
+            }
+        }
+
+        list.sortBy{it.appName}
+
+        val filter = mutableListOf<String>()
+        filter.add(BuildConfig.APPLICATION_ID)
+        return list.filterNot { filter.contains(it.packageName) }
     }
 
     override fun onStart() {
@@ -173,3 +205,4 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         }
     }
 }
+
