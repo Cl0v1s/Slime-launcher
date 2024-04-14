@@ -29,8 +29,5 @@ Also I'm working on [v3.0](https://github.com/sduduzog/slim-launcher/pull/98) an
  The point of reintroducing tests to the project is to make sure that there's less brittle parts around the app as more and more tests are added.
  When submitting a PR, for now you don't really have to write unit tests or anything but if you can, please do, but existing tests should not be removed just to pass the build once hooked up to the CI.
 
-## [Buy me a coffee](https://buymeacoff.ee/sduduzog)
-**5.** Motivation to work on this app comes from the great feedback I receive from the reviews on the Play Store and the e-mails.
-That someone out there noticed the little effort that I put into it gives me all the drive I need to type away at it time and time again.
-
-Thank you for your time
+## [Buy upstream dev a coffee](https://buymeacoff.ee/sduduzog)
+He deserves it
