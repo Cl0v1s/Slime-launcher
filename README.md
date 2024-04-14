@@ -1,7 +1,7 @@
 # Slime launcher
 > _All you need is slime._
 
-![Slime Launcher Logo](docs/assets/slim-logo.jpg)
+![Slime Launcher Logo](docs/assets/slim-logo.png)
 
 ## Background
 >A minimalist launcher that encourage you to use fewer apps on your device.
