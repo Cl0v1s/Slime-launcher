@@ -12,7 +12,7 @@
     <string name="options_fragment_change_theme">Changer de thème</string>
     <string name="options_fragment_choose_time_format">Choisir le format de l\'heure</string>
     <string name="options_fragment_customise_apps">Applications favorites</string>
-    <string name="options_fragment_toggle_status_bar">Basculer la barre d\'état</string>
+    <string name="options_fragment_toggle_status_bar">(dés)activer la barre d\'état</string>
     <string name="options_fragment_hide_status_bar">Masquer la barre d\'état</string>
     <string name="options_fragment_show_status_bar">Afficher la barre d\'état</string>
     <string name="customise_apps_fragment_add">Ajouter</string>

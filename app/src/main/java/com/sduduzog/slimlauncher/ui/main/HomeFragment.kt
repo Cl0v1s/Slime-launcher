@@ -8,9 +8,12 @@ import android.os.UserManager
 import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.provider.MediaStore
+import android.transition.Transition
+import android.transition.Transition.TransitionListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -110,6 +113,8 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
     }
 
     private fun setEventListeners() {
+        binding!!.root.addTransitionListener(HomeTransitionListener())
+
 
         binding!!.homeFragmentTime.setOnClickListener {
             try {
@@ -202,6 +207,21 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
     inner class ClockReceiver : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
             updateClock()
+        }
+    }
+
+    inner class HomeTransitionListener: MotionLayout.TransitionListener {
+        override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
+        }
+
+        override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
+        }
+
+        override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+            binding!!.homeFragmentListExp.scrollTo(0, 0);
+        }
+
+        override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {
         }
     }
 }

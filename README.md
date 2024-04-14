@@ -1,27 +1,15 @@
-# Slim launcher
-> _All you need is less._
+# Slime launcher
+> _All you need is slime._
 
-![GitHub](https://img.shields.io/github/license/sduduzog/slim-launcher.svg?style=plastic)
-![F-Droid](https://img.shields.io/f-droid/v/com.sduduzog.slimlauncher.svg?style=plastic)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/sduduzog/slim-launcher.svg?style=plastic)
-![GitHub stars](https://img.shields.io/github/stars/sduduzog/slim-launcher.svg?style=social)
-
-![Slim Launcher Logo](docs/assets/slim-logo.jpg)
-
-**Now available on Google Play and F-Droid!**
-
-[<img src="https://f-droid.org/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/com.sduduzog.slimlauncher/)
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="80">](https://play.google.com/store/apps/details?id=com.sduduzog.slimlauncher)
+![Slime Launcher Logo](docs/assets/slim-logo.jpg)
 
 ## Background
->A minimalist launcher that only allows you to use fewer apps on your device.
+>A minimalist launcher that encourage you to use fewer apps on your device.
+ 
+This project is based on [Slim Launcher](https://github.com/sduduzog/slim-launcher).  
+If the idea of creating a launcher that limits the number of accessible applications is a good one, I primarily needed a simple launcher onto which I could add elements based on my needs. The limitation to 7 visible applications from the initial project was removed to allow access to all phone applications. However, up to 7 applications can be pinned to the home screen, encouraging the avoidance of launching others.
 
 # Contributions
-
 
 ## Issues
 **1.** Create an issue with suggestions for what to change, or do so yourself.
@@ -41,12 +29,8 @@ Also I'm working on [v3.0](https://github.com/sduduzog/slim-launcher/pull/98) an
  The point of reintroducing tests to the project is to make sure that there's less brittle parts around the app as more and more tests are added.
  When submitting a PR, for now you don't really have to write unit tests or anything but if you can, please do, but existing tests should not be removed just to pass the build once hooked up to the CI.
 
-**4.** [Sign up as a tester](https://play.google.com/apps/testing/com.sduduzog.slimlauncher) to help access any implementations that make it to the beta channel. Your opinion is very valuable and affects **thousands** of users.
-
 ## [Buy me a coffee](https://buymeacoff.ee/sduduzog)
 **5.** Motivation to work on this app comes from the great feedback I receive from the reviews on the Play Store and the e-mails.
 That someone out there noticed the little effort that I put into it gives me all the drive I need to type away at it time and time again.
-
-**6.** Thank you to everyone that contributed to the project and my growth as a developer and a maintainer.
 
 Thank you for your time
