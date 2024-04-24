@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidx="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,10 +24,14 @@
         android:padding="@dimen/_4sdp"
         android:text="@string/main_placeholder_date"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="@+id/home_fragment_time"
-        app:layout_constraintStart_toStartOf="@+id/home_fragment_time"
-        app:layout_constraintTop_toBottomOf="@+id/home_fragment_time" />
+        android:textSize="@dimen/_12sdp" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_fragment_widgets"
+        android:name="com.sduduzog.slimlauncher.ui.main.WidgetsFragment"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_fragment_list"

@@ -115,7 +115,6 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
     private fun setEventListeners() {
         binding!!.root.addTransitionListener(HomeTransitionListener())
 
-
         binding!!.homeFragmentTime.setOnClickListener {
             try {
                 val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
