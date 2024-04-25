@@ -1,5 +1,7 @@
 package com.sduduzog.slimlauncher
 
+import android.appwidget.AppWidgetHost
+import android.appwidget.AppWidgetManager
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.os.Bundle
@@ -16,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(),
+class MainActivity() : AppCompatActivity(),
         SharedPreferences.OnSharedPreferenceChangeListener,
         HomeWatcher.OnHomePressedListener, IPublisher {
 
@@ -25,6 +27,9 @@ class MainActivity : AppCompatActivity(),
     private lateinit var homeWatcher: HomeWatcher
     private lateinit var binding: MainActivityBinding
     private val subscribers: MutableSet<BaseFragment> = mutableSetOf()
+
+    var widgetHost: AppWidgetHost? = null;
+    var widgetManager: AppWidgetManager? = null;
 
     override fun attachSubscriber(s: ISubscriber) {
         subscribers.add(s as BaseFragment)
@@ -45,6 +50,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        widgetHost = AppWidgetHost(this, R.id.widgetHostId)
+        widgetManager = AppWidgetManager.getInstance(this)
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         settings = getSharedPreferences(getString(R.string.prefs_settings), MODE_PRIVATE)
@@ -53,6 +60,7 @@ class MainActivity : AppCompatActivity(),
         homeWatcher = HomeWatcher(this)
         homeWatcher.setOnHomePressedListener(this)
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -63,11 +71,13 @@ class MainActivity : AppCompatActivity(),
     override fun onStart() {
         super.onStart()
         homeWatcher.startWatch()
+        widgetHost!!.startListening()
     }
 
     override fun onStop() {
         super.onStop()
         homeWatcher.stopWatch()
+        widgetHost!!.stopListening()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
