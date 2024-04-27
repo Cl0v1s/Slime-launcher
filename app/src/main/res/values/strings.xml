@@ -31,6 +31,8 @@
     <string name="options_fragment_choose_time_format">Choose Time Format</string>
     <string name="options_fragment_customise_apps">Favorite Apps</string>
     <string name="options_fragment_add_widget">Add a widget</string>
+    <string name="options_fragment_purge_widgets">Purge widgets</string>
+    <string name="options_fragment_purged_widgets">Widgets purged</string>
     <string name="options_fragment_added_widget">Widget added</string>
     <string name="options_fragment_toggle_status_bar">Toggle Status Bar</string>
     <string name="options_fragment_hide_status_bar">Hide Status Bar</string>

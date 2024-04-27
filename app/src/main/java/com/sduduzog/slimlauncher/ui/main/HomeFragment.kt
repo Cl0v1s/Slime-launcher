@@ -65,7 +65,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         // if we have some widgets activated we reduce time text size
         _viewModel.widgets.observe(viewLifecycleOwner) {
             if(it.size > 0) {
-                binding!!.homeFragmentTime.setTextSize(16.5f)
+                binding!!.homeFragmentTime.setTextSize(25f)
             } else
                 binding!!.homeFragmentTime.setTextSize(40f)
         }

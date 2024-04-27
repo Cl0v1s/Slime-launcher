@@ -15,7 +15,6 @@ class RepositoryModule {
     @Provides
     @ViewModelScoped
     fun providesRepository(appDao: AppDao, widgetDao: WidgetDao): Repository {
-        System.out.println("COUCOU")
         return Repository(appDao, widgetDao)
     }
 }

@@ -48,6 +48,7 @@ class WidgetsFragment: Fragment(R.layout.widgets_fragment) {
         val hostView: AppWidgetHostView = _host!!.createView(context!!.applicationContext, appWidgetId, appWidgetInfo)
         hostView.setAppWidget(appWidgetId, appWidgetInfo)
         _binding!!.widgetsFragment.addView(hostView)
+
         _binding!!.widgetsFragment.invalidate();
     }
 }

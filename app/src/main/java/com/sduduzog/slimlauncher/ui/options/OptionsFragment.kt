@@ -51,6 +51,10 @@ class OptionsFragment : BaseFragment() {
             selectWidget()
         }
 
+        binding!!.optionsFragmentPurgeWidgets.setOnClickListener {
+            purgeWidgets()
+        }
+
         binding!!.optionsFragmentDeviceSettings.setOnClickListener {
             val intent = Intent(Settings.ACTION_SETTINGS)
             launchActivity(it, intent)
@@ -87,6 +91,11 @@ class OptionsFragment : BaseFragment() {
         return binding?.root
     }
 
+    fun purgeWidgets() {
+        _viewModel.purgeWidgets(_host!!)
+        val toast = Toast.makeText(context, R.string.options_fragment_purged_widgets, Toast.LENGTH_SHORT)
+        toast.show()
+    }
 
     fun selectWidget() {
         val appWidgetId: Int = _host!!.allocateAppWidgetId()

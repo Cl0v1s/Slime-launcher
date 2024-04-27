@@ -23,4 +23,7 @@ interface WidgetDao {
 
     @Delete
     fun remove(widget:Widget)
+
+    @Query("DELETE FROM widgets")
+    fun purge();
 }

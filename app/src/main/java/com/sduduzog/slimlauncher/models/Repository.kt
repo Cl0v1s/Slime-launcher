@@ -45,4 +45,8 @@ class Repository(private val appDao: AppDao, private val widgetDao: WidgetDao) {
     fun removeWidget(widget: Widget) {
         widgetDao.remove(widget)
     }
+
+    fun purgeWidgets() {
+        widgetDao.purge()
+    }
 }

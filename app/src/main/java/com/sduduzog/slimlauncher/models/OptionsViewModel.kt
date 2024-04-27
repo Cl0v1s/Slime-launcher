@@ -1,5 +1,6 @@
 package com.sduduzog.slimlauncher.models
 
+import android.appwidget.AppWidgetHost
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,13 +16,25 @@ class OptionsViewModel @Inject constructor(
 
     val widgets: LiveData<List<Widget>>;
 
+    var _widgets: List<Widget> = emptyList()
+
     init {
        widgets = repository.widgets;
+        widgets.observeForever{
+            _widgets = it;
+        }
     }
 
     fun addWidget(widget: Widget) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addWidget(widget)
+        }
+    }
+
+    fun purgeWidgets(host: AppWidgetHost) {
+        _widgets.forEach { widget -> host!!.deleteAppWidgetId(widget.id) }
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.purgeWidgets()
         }
     }
 
