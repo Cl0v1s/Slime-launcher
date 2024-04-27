@@ -1,28 +1,48 @@
 package com.sduduzog.slimlauncher.models
 
 import androidx.lifecycle.LiveData
-import com.sduduzog.slimlauncher.data.BaseDao
+import com.sduduzog.slimlauncher.data.AppDao
+import com.sduduzog.slimlauncher.data.WidgetDao
 
-class Repository(private val baseDao: BaseDao) {
+class Repository(private val appDao: AppDao, private val widgetDao: WidgetDao) {
 
-    private val _apps = baseDao.apps
+
+    // HomeApps
+    private val _apps = appDao.apps
 
     val apps: LiveData<List<HomeApp>>
         get() = _apps
 
-    fun add(app: HomeApp) {
-        baseDao.add(app)
+    fun addApp(app: HomeApp) {
+        appDao.add(app)
     }
 
-    fun update(vararg list : HomeApp) {
-        baseDao.update(*list)
+    fun updateApp(vararg list : HomeApp) {
+        appDao.update(*list)
     }
 
-    fun remove(app: HomeApp) {
-        baseDao.remove(app)
+    fun removeApp(app: HomeApp) {
+        appDao.remove(app)
     }
 
-    fun clearTable(){
-        baseDao.clearTable()
+    fun clearAppTable(){
+        appDao.clearTable()
+    }
+
+    // Widgets
+    private val _widgets = widgetDao.widgets
+    val widgets: LiveData<List<Widget>>
+        get() = _widgets
+
+    fun addWidget(widget: Widget) {
+        widgetDao.add(widget)
+    }
+
+    fun updateWidget(widget: Widget) {
+        widgetDao.update(widget)
+    }
+
+    fun removeWidget(widget: Widget) {
+        widgetDao.remove(widget)
     }
 }

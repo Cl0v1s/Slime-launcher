@@ -1,6 +1,7 @@
 package com.sduduzog.slimlauncher.di
 
-import com.sduduzog.slimlauncher.data.BaseDao
+import com.sduduzog.slimlauncher.data.AppDao
+import com.sduduzog.slimlauncher.data.WidgetDao
 import com.sduduzog.slimlauncher.models.Repository
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,8 @@ import dagger.hilt.android.scopes.ViewModelScoped
 class RepositoryModule {
     @Provides
     @ViewModelScoped
-    fun providesRepository(baseDao: BaseDao): Repository {
-        return Repository(baseDao)
+    fun providesRepository(appDao: AppDao, widgetDao: WidgetDao): Repository {
+        System.out.println("COUCOU")
+        return Repository(appDao, widgetDao)
     }
 }

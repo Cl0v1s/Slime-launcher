@@ -6,12 +6,15 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.sduduzog.slimlauncher.models.HomeApp
+import com.sduduzog.slimlauncher.models.Widget
 
 
-@Database(entities = [HomeApp::class], version = 8, exportSchema = false)
+@Database(entities = [HomeApp::class, Widget::class], version = 9, exportSchema = false)
 abstract class BaseDatabase : RoomDatabase() {
 
-    abstract fun baseDao(): BaseDao
+    abstract fun appDao(): AppDao
+
+    abstract fun widgetDao(): WidgetDao
 
     companion object {
 
@@ -81,6 +84,12 @@ abstract class BaseDatabase : RoomDatabase() {
                         "SELECT package_name, user_serial, app_name, app_nickname, activity_name, sorting_index FROM home_apps")
                 database.execSQL("DROP TABLE home_apps")
                 database.execSQL("ALTER TABLE home_apps_copy RENAME TO home_apps")
+            }
+        }
+
+        val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS `widgets`(`id` INTEGER PRIMARY KEY, `extras` TEXT NOT NULL)")
             }
         }
     }

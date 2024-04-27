@@ -50,7 +50,7 @@ class AddAppViewModel @Inject constructor(
     fun addAppToHomeScreen(app: App) {
         val index = _homeApps.size
         viewModelScope.launch(Dispatchers.IO) {
-            repository.add(HomeApp.from(app, index))
+            repository.addApp(HomeApp.from(app, index))
         }
     }
 

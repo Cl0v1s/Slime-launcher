@@ -6,9 +6,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import com.sduduzog.slimlauncher.data.BaseDao
+import com.sduduzog.slimlauncher.data.AppDao
 import com.sduduzog.slimlauncher.data.BaseDatabase
+import com.sduduzog.slimlauncher.data.WidgetDao
 import com.sduduzog.slimlauncher.models.HomeApp
+import com.sduduzog.slimlauncher.models.Widget
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -18,12 +20,12 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.io.IOException
 
-@RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.Q])
 class BaseDatabaseTest {
 
     private lateinit var db: BaseDatabase
-    private lateinit var baseDao: BaseDao
+    private lateinit var appDao: AppDao
+    private lateinit var widgetDao: WidgetDao
 
     @Rule
     @JvmField
@@ -43,11 +45,13 @@ class BaseDatabaseTest {
                 BaseDatabase.MIGRATION_4_5,
                 BaseDatabase.MIGRATION_5_6,
                 BaseDatabase.MIGRATION_6_7,
-                BaseDatabase.MIGRATION_7_8
+                BaseDatabase.MIGRATION_7_8,
+                BaseDatabase.MIGRATION_8_9,
             )
             .allowMainThreadQueries()
             .build()
-        baseDao = db.baseDao()
+        appDao = db.appDao()
+        widgetDao = db.widgetDao()
     }
 
     @After
@@ -65,7 +69,17 @@ class BaseDatabaseTest {
             0,
             null, 12345
         )
-        baseDao.add(app)
-        assertThat(LiveDataTestUtil.getValue(baseDao.apps)).contains(app)
+        appDao.add(app)
+        assertThat(LiveDataTestUtil.getValue(appDao.apps)).contains(app)
+    }
+
+    @Test
+    fun writeAndReadWidget() {
+        val widget = Widget(
+                0,
+                "coucou"
+        )
+        widgetDao.add(widget)
+        assertThat(LiveDataTestUtil.getValue(widgetDao.widgets)).contains(widget)
     }
 }

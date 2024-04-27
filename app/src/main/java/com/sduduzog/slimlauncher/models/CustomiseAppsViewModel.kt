@@ -20,7 +20,7 @@ class CustomiseAppsViewModel @Inject constructor(
 
     fun update(vararg args: HomeApp) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.update(*args)
+            repository.updateApp(*args)
         }
     }
 
@@ -31,13 +31,13 @@ class CustomiseAppsViewModel @Inject constructor(
 
     fun remove(app: HomeApp) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.remove(app)
+            repository.removeApp(app)
         }
     }
 
     fun clearTable() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.clearTable()
+            repository.clearAppTable()
         }
     }
 }

@@ -8,13 +8,11 @@ import android.os.UserManager
 import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.provider.MediaStore
-import android.transition.Transition
-import android.transition.Transition.TransitionListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.core.view.get
+import androidx.core.view.marginTop
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.sduduzog.slimlauncher.BuildConfig
@@ -35,8 +33,9 @@ import java.util.*
 class HomeFragment : BaseFragment(), OnLaunchAppListener {
 
     private var _binding: HomeFragmentBinding? = null
+
     private val binding get() = _binding
-    private val viewModel: MainViewModel by viewModels()
+    private val _viewModel: MainViewModel by viewModels()
 
     private lateinit var receiver: BroadcastReceiver
 
@@ -44,7 +43,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.setInstalledApps(getInstalledApps());
+        _viewModel.setInstalledApps(getInstalledApps());
 
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
         val adapter1 = HomeAdapter(this)
@@ -52,16 +51,26 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         binding!!.homeFragmentList.adapter = adapter1
         binding!!.homeFragmentListExp.adapter = adapter2
 
-        viewModel.apps.observe(viewLifecycleOwner) { list ->
+        _viewModel.apps.observe(viewLifecycleOwner) { list ->
             list?.let { apps ->
                 adapter1.setItems(apps)
             }
         }
 
-        adapter2.setItems(viewModel.installedApps);
+        adapter2.setItems(_viewModel.installedApps);
 
         setEventListeners()
         binding!!.homeFragmentOptions.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_optionsFragment))
+
+        // if we have some widgets activated we reduce time text size
+        _viewModel.widgets.observe(viewLifecycleOwner) {
+            if(it.size > 0) {
+                binding!!.homeFragmentTime.setTextSize(16.5f)
+            } else
+                binding!!.homeFragmentTime.setTextSize(40f)
+        }
+
+
         return binding?.root
     }
 

@@ -12,6 +12,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _apps: LiveData<List<HomeApp>> = _baseRepository.apps
+    private val _widgets: LiveData<List<Widget>> = _baseRepository.widgets
 
     private val _installedApps = mutableListOf<HomeApp>()
 
@@ -24,6 +25,9 @@ class MainViewModel @Inject constructor(
 
     val apps: LiveData<List<HomeApp>>
         get() = _apps
+
+    val widgets: LiveData<List<Widget>>
+        get() = _widgets
 
     val installedApps: List<HomeApp>
         get() = _installedApps

@@ -2,8 +2,9 @@ package com.sduduzog.slimlauncher.di
 
 import android.app.Application
 import androidx.room.Room
-import com.sduduzog.slimlauncher.data.BaseDao
+import com.sduduzog.slimlauncher.data.AppDao
 import com.sduduzog.slimlauncher.data.BaseDatabase
+import com.sduduzog.slimlauncher.data.WidgetDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,14 +26,21 @@ class AppModule {
                         BaseDatabase.MIGRATION_4_5,
                         BaseDatabase.MIGRATION_5_6,
                         BaseDatabase.MIGRATION_6_7,
-                        BaseDatabase.MIGRATION_7_8
+                        BaseDatabase.MIGRATION_7_8,
+                        BaseDatabase.MIGRATION_8_9,
                 )
                 .build()
     }
 
     @Provides
     @Singleton
-    internal fun provideBaseDao(baseDatabase: BaseDatabase): BaseDao {
-        return baseDatabase.baseDao()
+    internal fun provideAppDao(baseDatabase: BaseDatabase): AppDao {
+        return baseDatabase.appDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideWidgetDao(baseDatabase: BaseDatabase): WidgetDao {
+        return baseDatabase.widgetDao()
     }
 }

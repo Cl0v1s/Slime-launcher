@@ -16,6 +16,8 @@
     <string name="options_fragment_hide_status_bar">Masquer la barre d\'état</string>
     <string name="options_fragment_show_status_bar">Afficher la barre d\'état</string>
     <string name="customise_apps_fragment_add">Ajouter</string>
+    <string name="options_fragment_added_widget">Widget ajouté</string>
+    <string name="options_fragment_add_widget">Ajouter un widget</string>
     <string name="menu_rename">Renommer</string>
     <string name="menu_remove">Supprimer</string>
     <string name="choose_theme_dialog_title">Choisir le thème</string>
