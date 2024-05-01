@@ -6,12 +6,16 @@ import com.sduduzog.slimlauncher.data.WidgetDao
 
 class Repository(private val appDao: AppDao, private val widgetDao: WidgetDao) {
 
-
-    // HomeApps
     private val _apps = appDao.apps
+
+    private val _widgets = widgetDao.widgets
 
     val apps: LiveData<List<HomeApp>>
         get() = _apps
+
+    val widgets: LiveData<List<Widget>>
+        get() = _widgets
+
 
     fun addApp(app: HomeApp) {
         appDao.add(app)
@@ -30,9 +34,8 @@ class Repository(private val appDao: AppDao, private val widgetDao: WidgetDao) {
     }
 
     // Widgets
-    private val _widgets = widgetDao.widgets
-    val widgets: LiveData<List<Widget>>
-        get() = _widgets
+
+
 
     fun addWidget(widget: Widget) {
         widgetDao.add(widget)

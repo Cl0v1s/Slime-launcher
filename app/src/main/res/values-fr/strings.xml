@@ -26,4 +26,8 @@
     <string name="add_apps_fragment_search_apps">Rechercher des applications</string>
     <string name="customise_apps_fragment_remove_all">Tout supprimer</string>
     <string name="menu_reset">Réinitialiser</string>
+    <string name="options_fragment_toggle_time_date">(dés)afficher la date et l\'heure</string>
+    <string name="options_fragment_too_many_widgets">Seuls 2 widgets peuvent être actifs en même temps</string>
+    <string name="options_fragment_time_date_hidden">Date et heure masqués</string>
+    <string name="options_fragment_time_date_visible">Date et heure affichés</string>
 </resources>

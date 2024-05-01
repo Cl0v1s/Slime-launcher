@@ -1,5 +1,6 @@
 package com.sduduzog.slimlauncher.ui.main
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.LauncherApps
 import android.os.Bundle
@@ -11,8 +12,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.core.view.marginTop
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.sduduzog.slimlauncher.BuildConfig
@@ -39,6 +40,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
 
     private lateinit var receiver: BroadcastReceiver
 
+    @SuppressLint("NewApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,14 +48,19 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         _viewModel.setInstalledApps(getInstalledApps());
 
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
-        val adapter1 = HomeAdapter(this)
         val adapter2 = HomeAdapter(this)
-        binding!!.homeFragmentList.adapter = adapter1
         binding!!.homeFragmentListExp.adapter = adapter2
 
         _viewModel.apps.observe(viewLifecycleOwner) { list ->
             list?.let { apps ->
-                adapter1.setItems(apps)
+                apps.forEach {app ->
+                    val view = LayoutInflater.from(context)
+                        .inflate(R.layout.main_fragment_list_item, binding!!.root, false) as TextView
+                    view.setOnClickListener { onLaunch(app, it) }
+                    view.setText(app.appNickname ?: app.appName)
+                    binding!!.homeFragmentList.addView(view)
+                }
+                binding!!.homeFragmentList.invalidate()
             }
         }
 
@@ -62,14 +69,16 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         setEventListeners()
         binding!!.homeFragmentOptions.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_optionsFragment))
 
-        // if we have some widgets activated we reduce time text size
-        _viewModel.widgets.observe(viewLifecycleOwner) {
-            if(it.size > 0) {
-                binding!!.homeFragmentTime.setTextSize(25f)
-            } else
-                binding!!.homeFragmentTime.setTextSize(40f)
+        val settings = requireContext().getSharedPreferences(
+                getString(R.string.prefs_settings),
+                Context.MODE_PRIVATE
+        )
+        val isTimeDateHidden =
+                settings.getBoolean(getString(R.string.prefs_settings_key_toggle_time_date), false)
+        if(isTimeDateHidden) {
+            binding!!.homeFragmentTime.height = 0
+            binding!!.homeFragmentDate.height = 0
         }
-
 
         return binding?.root
     }

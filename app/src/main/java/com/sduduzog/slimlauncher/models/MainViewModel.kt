@@ -1,18 +1,26 @@
 package com.sduduzog.slimlauncher.models
 
+import android.appwidget.AppWidgetHost
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sduduzog.slimlauncher.data.model.App
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    _baseRepository: Repository
+    private val _baseRepository: Repository
 ) : ViewModel() {
 
     private var _apps: LiveData<List<HomeApp>> = _baseRepository.apps
-    private val _widgets: LiveData<List<Widget>> = _baseRepository.widgets
+    private var _widgets: List<Widget> = emptyList()
+
+    init {
+        _baseRepository.widgets.observeForever({ _widgets = it })
+    }
 
     private val _installedApps = mutableListOf<HomeApp>()
 
@@ -23,11 +31,17 @@ class MainViewModel @Inject constructor(
         )
     }
 
+    fun removeWidget(widgetId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _baseRepository.removeWidget(_widgets.find { it.id == widgetId }!!);
+        }
+    }
+
     val apps: LiveData<List<HomeApp>>
         get() = _apps
 
     val widgets: LiveData<List<Widget>>
-        get() = _widgets
+        get() = _baseRepository.widgets
 
     val installedApps: List<HomeApp>
         get() = _installedApps

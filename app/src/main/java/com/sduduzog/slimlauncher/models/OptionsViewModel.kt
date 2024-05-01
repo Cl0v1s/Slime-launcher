@@ -14,16 +14,7 @@ class OptionsViewModel @Inject constructor(
         private val repository: Repository
 ) : ViewModel() {
 
-    val widgets: LiveData<List<Widget>>;
-
-    var _widgets: List<Widget> = emptyList()
-
-    init {
-       widgets = repository.widgets;
-        widgets.observeForever{
-            _widgets = it;
-        }
-    }
+    val _widgets: LiveData<List<Widget>> = repository.widgets;
 
     fun addWidget(widget: Widget) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,7 +23,7 @@ class OptionsViewModel @Inject constructor(
     }
 
     fun purgeWidgets(host: AppWidgetHost) {
-        _widgets.forEach { widget -> host!!.deleteAppWidgetId(widget.id) }
+        _widgets.value!!.forEach { widget -> host!!.deleteAppWidgetId(widget.id) }
         viewModelScope.launch(Dispatchers.IO) {
             repository.purgeWidgets()
         }

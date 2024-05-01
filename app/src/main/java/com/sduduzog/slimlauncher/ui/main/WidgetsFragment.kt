@@ -44,11 +44,16 @@ class WidgetsFragment: Fragment(R.layout.widgets_fragment) {
 
     fun spawnWidget(extras: Bundle) {
         val appWidgetId = extras!!.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-        val appWidgetInfo: AppWidgetProviderInfo = _manager!!.getAppWidgetInfo(appWidgetId)
-        val hostView: AppWidgetHostView = _host!!.createView(context!!.applicationContext, appWidgetId, appWidgetInfo)
-        hostView.setAppWidget(appWidgetId, appWidgetInfo)
-        _binding!!.widgetsFragment.addView(hostView)
-
-        _binding!!.widgetsFragment.invalidate();
+        try {
+            val appWidgetInfo: AppWidgetProviderInfo = _manager!!.getAppWidgetInfo(appWidgetId)
+            val hostView: AppWidgetHostView = _host!!.createView(context!!.applicationContext, appWidgetId, appWidgetInfo)
+            hostView.setAppWidget(appWidgetId, appWidgetInfo)
+            _binding!!.widgetsFragment.addView(hostView)
+            hostView.layoutParams.height = if(appWidgetInfo.minHeight < 250) 250 else appWidgetInfo.minHeight
+            _binding!!.widgetsFragment.invalidate();
+        } catch(e: NullPointerException) {
+            System.out.println(e.message)
+            _viewModel.removeWidget(appWidgetId)
+        }
     }
 }

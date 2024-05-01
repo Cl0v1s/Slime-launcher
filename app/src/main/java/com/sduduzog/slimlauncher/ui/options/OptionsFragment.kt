@@ -1,5 +1,6 @@
 package com.sduduzog.slimlauncher.ui.options
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
@@ -72,6 +73,26 @@ class OptionsFragment : BaseFragment() {
             val chooseTimeFormatDialog = ChooseTimeFormatDialog.getInstance()
             chooseTimeFormatDialog.showNow(childFragmentManager, "TIME_FORMAT_CHOOSER")
         }
+
+        binding!!.optionsFragmentToggleTimeDate.setOnClickListener {
+            val settings = requireContext().getSharedPreferences(
+                    getString(R.string.prefs_settings),
+                    MODE_PRIVATE
+            )
+            val isHidden =
+                    settings.getBoolean(getString(R.string.prefs_settings_key_toggle_time_date), false)
+            settings.edit {
+                putBoolean(getString(R.string.prefs_settings_key_toggle_time_date), !isHidden)
+            }
+            var resId: Int;
+
+            if(!isHidden) resId = R.string.options_fragment_time_date_visible
+            else resId = R.string.options_fragment_time_date_hidden
+
+            val toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT)
+            toast.show()
+        }
+
         binding!!.optionsFragmentToggleStatusBar.setOnClickListener {
             val settings = requireContext().getSharedPreferences(
                 getString(R.string.prefs_settings),
@@ -83,6 +104,7 @@ class OptionsFragment : BaseFragment() {
                 putBoolean(getString(R.string.prefs_settings_key_toggle_status_bar), !isHidden)
             }
         }
+
         binding!!.optionsFragmentCustomiseApps.setOnClickListener(
             Navigation.createNavigateOnClickListener(
                 R.id.action_optionsFragment_to_customiseAppsFragment
@@ -97,6 +119,7 @@ class OptionsFragment : BaseFragment() {
         toast.show()
     }
 
+    @SuppressLint("NewApi")
     fun selectWidget() {
         val appWidgetId: Int = _host!!.allocateAppWidgetId()
         val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
