@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
 
     private lateinit var receiver: BroadcastReceiver
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,19 +48,14 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         _viewModel.setInstalledApps(getInstalledApps());
 
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        val adapter1 = HomeAdapter(this)
         val adapter2 = HomeAdapter(this)
+        binding!!.homeFragmentList.adapter = adapter1
         binding!!.homeFragmentListExp.adapter = adapter2
 
         _viewModel.apps.observe(viewLifecycleOwner) { list ->
             list?.let { apps ->
-                apps.forEach {app ->
-                    val view = LayoutInflater.from(context)
-                        .inflate(R.layout.main_fragment_list_item, binding!!.root, false) as TextView
-                    view.setOnClickListener { onLaunch(app, it) }
-                    view.setText(app.appNickname ?: app.appName)
-                    binding!!.homeFragmentList.addView(view)
-                }
-                binding!!.homeFragmentList.invalidate()
+                adapter1.setItems(apps)
             }
         }
 
@@ -235,7 +230,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
         }
 
         override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-            binding!!.homeFragmentListExp.scrollTo(0, 0);
+            binding!!.homeFragmentListExp.scrollToPosition(0)
         }
 
         override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {

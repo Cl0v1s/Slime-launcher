@@ -23,7 +23,7 @@ class OptionsViewModel @Inject constructor(
     }
 
     fun purgeWidgets(host: AppWidgetHost) {
-        _widgets.value!!.forEach { widget -> host!!.deleteAppWidgetId(widget.id) }
+        host!!.appWidgetIds.forEach { host!!.deleteAppWidgetId(it) }
         viewModelScope.launch(Dispatchers.IO) {
             repository.purgeWidgets()
         }

@@ -86,8 +86,8 @@ class OptionsFragment : BaseFragment() {
             }
             var resId: Int;
 
-            if(!isHidden) resId = R.string.options_fragment_time_date_visible
-            else resId = R.string.options_fragment_time_date_hidden
+            if(!isHidden) resId = R.string.options_fragment_time_date_hidden
+            else resId = R.string.options_fragment_time_date_visible
 
             val toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT)
             toast.show()
