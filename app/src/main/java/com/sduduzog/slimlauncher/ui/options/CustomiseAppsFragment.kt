@@ -45,7 +45,7 @@ class CustomiseAppsFragment : BaseFragment(), OnShitDoneToAppsListener {
             it?.let { apps ->
                 adapter.setItems(apps)
                 binding!!.customiseAppsFragmentAdd.visibility =
-                    if (apps.size < 7) View.VISIBLE else View.INVISIBLE
+                    if (apps.size < 6) View.VISIBLE else View.INVISIBLE
             } ?: adapter.setItems(listOf())
         }
         binding!!.customiseAppsFragmentRemoveAll.setOnClickListener {

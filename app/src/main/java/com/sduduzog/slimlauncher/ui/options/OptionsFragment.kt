@@ -119,7 +119,6 @@ class OptionsFragment : BaseFragment() {
         toast.show()
     }
 
-    @SuppressLint("NewApi")
     fun selectWidget() {
         val appWidgetId: Int = _host!!.allocateAppWidgetId()
         val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
